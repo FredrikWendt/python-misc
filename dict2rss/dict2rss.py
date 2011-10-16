@@ -40,17 +40,18 @@ class dict2rss:
 
 				sys.stdout = self.itemio
 				for child in dict[key]:
-					print('\t\t<item>')
+					print(u'\t\t<item>')
 					for childchild in dict[key][child]:
 						if childchild == "comment":
-							print("\t\t\t<!-- %s -->" % (dict[key][child][childchild]))
+							print(u"\t\t\t<!-- %s -->" % (dict[key][child][childchild]))
 						else:
 							try:
 								if childchild in dict['cdata']:
-									print('\t\t\t<%s><![CDATA[%s]]></%s>'  % (childchild, cgi.escape(dict[key][child][childchild]), childchild))
-								else: print('\t\t\t<%s>%s</%s>'  % (childchild, cgi.escape(dict[key][child][childchild]), childchild))
-							except: print('\t\t\t<%s>%s</%s>'  % (childchild, cgi.escape(dict[key][child][childchild]), childchild))
-					print('\t\t</item>')
+									print(u'\t\t\t<%s><![CDATA[%s]]></%s>'  % (childchild, cgi.escape(dict[key][child][childchild]), childchild))
+								else: 
+									print(u'\t\t\t<%s>%s</%s>'  % (childchild, cgi.escape(dict[key][child][childchild]), childchild))
+							except: print(u'\t\t\t<%s>%s</%s>'  % (childchild, cgi.escape(dict[key][child][childchild]), childchild))
+					print(u'\t\t</item>')
 				sys.stdout = sys.__stdout__
 
 	def PrettyPrint(self):
@@ -66,7 +67,7 @@ class dict2rss:
 		return self._out() #.replace('\t','').replace('\n','')
 
 	def _out(self):
-		d = '<?xml version="1.0" encoding="UTF-8"?>\n\n'
+		d = u'<?xml version="1.0" encoding="UTF-8"?>\n\n'
 		d += ('<rss version="%s">\n' % self.version)
 		d += '\t<channel>\n'
 		d += ('\t\t<title>%s</title>\n' % self.title)
@@ -76,7 +77,7 @@ class dict2rss:
 		d += self.itemio.getvalue()
 		d += '\t</channel>\n'
 		d += '</rss>'
-		return d
+		return d.encode('utf-8')
 
 if __name__ == "__main__":		
 	example_dict = {
@@ -98,4 +99,4 @@ if __name__ == "__main__":
 		'version':'0.1',
 	}
 	d = dict2rss(example_dict)
-	d.TinyPrint()
+	d.PrettyPrint()
