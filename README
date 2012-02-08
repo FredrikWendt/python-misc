@@ -1,0 +1,5 @@
+This is a slasktratt (Google Translate, sv to en) for scripts/utilities written in Python.
+
+dict2rss - creates an RSS stream from a dictionary
+
+doit - tool used to do small things on many folders in parallell (such as hg pull)
